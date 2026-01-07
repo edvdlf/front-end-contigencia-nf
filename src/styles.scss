@@ -1,0 +1,36 @@
+@use "styles/core/tokens";
+@use "styles/components/topbar";
+@use "styles/components/sidebar";
+@use "styles/components/footer";
+@use "styles/components/card";
+@use "styles/components/tables";
+@use "styles/components/buttons";
+@use "styles/base/base";
+@use "styles/page/login";
+@use "styles/page/cadastros";
+
+:root {
+  /* Paleta VetorIT – uso interno do seu layout */
+  --vt-orange:        #E1742E;
+  --vt-orange-600:    #C76322;
+  --vt-orange-700:    #A9541C;
+
+  --vt-yellow:        #FFCC4D;
+  --vt-yellow-600:    #E6B844;
+
+  --vt-danger:        #E44C4C;
+  --vt-danger-600:    #C63F3F;
+
+  --vt-focus-ring:    0 0 0 3px rgba(5,154,210,.25);
+  --av-blue:          #059AD2;
+}
+
+/* EXEMPLO: se ainda quiser garantir o checkbox azul na marra */
+.p-checkbox .p-checkbox-box.p-highlight {
+  background: #0A285F;
+  border-color: #0A285F;
+}
+
+.p-checkbox .p-checkbox-box.p-highlight .p-checkbox-icon {
+  color: #ffffff;
+}

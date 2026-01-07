@@ -1,0 +1,110 @@
+<div class="login-page">
+  <div class="layout-2cols">
+    <section class="left">
+       <div class="login-card">
+        <form [formGroup]="loginForm" (ngSubmit)=" handleSubmit()">
+          <header class="login-head">
+            <h1 class="login-title">Acessar conta</h1>
+            <p class="login-subtitle">Use seu e-mail e senha para entrar</p>
+          </header>
+
+          <!-- E-mail -->
+          <div class="input-wrapper">
+            <label for="email">E-mail</label>
+            <input id="login-usuario" type="text" pInputText class="p-inputtext" formControlName="usuario"
+              placeholder="Digite seu usuario" />
+
+            
+            <div *ngIf="loginForm.get('usuario')?.errors?.['required'] && loginForm.get('usuario')?.touched" class="text-red-600 mt-1">
+              Usuário é obrigatório.
+            </div>
+            
+          
+
+          </div>
+
+          <!-- Senha -->
+          <div class="input-wrapper">
+            <label for="senha">Senha</label>
+
+            <p-password id="login-password" formControlName="password" [toggleMask]="true" [feedback]="false" class="w-full"
+              inputClass="p-inputtext w-full" placeholder="Digite sua senha">
+            </p-password>
+
+            <!--p-message *ngIf="f['senha'].hasError('required') && (f['senha'].touched || submitted)" severity="error"
+              text="Senha é obrigatória.">
+            </p-message-->
+
+            <!--p-message
+              *ngIf="f['senha'].hasError('minlength') && !f['senha'].hasError('required') && (f['senha'].touched || submitted)"
+              severity="error" text="Senha deve ter pelo menos 6 caracteres.">
+            </p-message-->
+            <div *ngIf="loginForm.get('senha')?.errors?.['required'] && loginForm.get('senha')?.touched" class="text-red-600 mt-1">
+                Senha é obrigatória.
+            </div>
+
+          </div>
+
+          <!-- Ações -->
+          <div class="actions">
+            <div class="remember-wrap">
+              <p-checkbox inputId="lembrar" formControlName="lembrar" binary="true"></p-checkbox>
+              <label for="lembrar" class="remember">Lembrar</label>
+            </div>
+
+            <a routerLink="/recuperar-senha" class="text-sm text-blue-500 hover:underline cursor-pointer"
+              style="font-weight: 500;">
+              Esqueci minha senha
+            </a>
+          </div>
+
+          <!-- Botão -->
+          <button pButton type="submit" label="Entrar" id="login-button" class="btn-primary" [disabled]="loginForm.invalid || loading">
+          </button>
+        </form>
+      </div>
+      
+    </section>
+
+    
+ <aside class="right" aria-label="Apresentação do sistema">
+  <div class="brand">
+    <div class="col-9 flex align-self-center align-items-center justify-content-center fadeinup animation-duration-2000">
+            <div><img src="img/agora_logo2.png" class="responsivo"></div>
+  </div>
+
+   
+    <h2 class="brand-title">
+      Contingência Fiscal <span>•</span> Reforma Tributária <span>•</span> NFe
+    </h2>
+
+    <p class="brand-sub">
+      Plataforma preparada para manter a continuidade da emissão e o controle operacional
+      em cenários de indisponibilidade, com rastreabilidade e sincronização posterior.
+    </p>
+
+    
+    <div class="right-features">
+      <div class="feat">
+        
+        <span><strong> Gestão de NFe em contingência</strong> com controle e auditoria</span>
+      </div>
+      <div class="feat">
+        
+        <span><strong> Sincronização posterior</strong> e acompanhamento do processamento</span>
+      </div>
+      <div class="feat">
+        
+        <span><strong> Visão operacional</strong> para monitoramento e tomada de decisão</span>
+      </div>
+    </div>
+
+   
+
+  </div>
+</aside>
+
+   
+    
+  </div>
+</div>
