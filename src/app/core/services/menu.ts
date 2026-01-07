@@ -1,4 +1,5 @@
 import { Injectable, computed, effect, inject, signal } from '@angular/core';
+import { LoginService } from '../../auth/login/login.service';
 
 
 /** Estrutura do item de menu */
@@ -110,18 +111,19 @@ export class MenuService {
 
   /** leitura reativa do menu */
   readonly items = computed(() => this._items());
+  private readonly login = inject(LoginService);
+
 
   constructor() {
-    // reage automaticamente ao perfil/roles do usuário logado
     effect(() => {
-      //const perfil = this.auth.perfil();     // 'ADMIN' | 'NORMAL'
-      //const roles = this.auth.roles();       // string[] (no seu caso pode ser ['ADMIN'] ou ['NORMAL'])
+      const roles = this.login.obterPermissoes(); // <- vem do JWT
+      const perfil: PerfilUsuario = roles.includes('ROLE_ADMINISTRATOR') || roles.includes('ROLE_SUPERUSER')
+        ? 'ADMIN'
+        : 'NORMAL';
 
-      //const base = this.getMenuByPerfil(perfil);
-      //const finalMenu = this.applyPermissionsOn(base, roles);
-
-      //this._baseItems.set(base);
-      //this._items.set(finalMenu);
+      const base = this.getMenuByPerfil(perfil);
+      const finalMenu = this.applyPermissionsOn(base, roles);
+      this._items.set(finalMenu);
     });
   }
 

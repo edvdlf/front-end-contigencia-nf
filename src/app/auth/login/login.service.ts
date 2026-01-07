@@ -26,11 +26,16 @@ constructor(private _http: HttpClient, @Inject(PLATFORM_ID) private platformId: 
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
+  //isAuthenticated(): boolean {
+   // return true;
+   // const token = this.getToken();
+   // return !!token && !this.jwtHelper.isTokenExpired(token);
+ // }
+
   isAuthenticated(): boolean {
-    return true;
-    const token = this.getToken();
-    return !!token && !this.jwtHelper.isTokenExpired(token);
-  }
+  const token = this.getToken();
+  return !!token && !this.jwtHelper.isTokenExpired(token);
+}
 
   isFirstAccess(): boolean {
     const token: any = this.jwtHelper.decodeToken(this.getToken()!) as any;
