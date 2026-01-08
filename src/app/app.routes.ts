@@ -56,6 +56,12 @@ export const routes: Routes = [
             .then(m => m.CHAMADO_ROUTES),
       },
       {
+        path: 'config-regras',
+        loadChildren: () =>
+          import('./modules/config-regras/config-regras.routes')
+            .then(m => m.CONFIG_REGRAS_ROUTES),
+      },
+      {
         path: 'alterar-senha',
         loadChildren: () =>
           import('./auth/gestao-senha/altera-senha/altera-senha.routes')

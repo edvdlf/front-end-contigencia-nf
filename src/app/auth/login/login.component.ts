@@ -57,6 +57,9 @@ export class LoginComponent {
     console.log('logando...')
     try{
       await lastValueFrom(this.loginService.signIn(this.loginForm.value as ILogin));
+      
+
+         
       this.router.navigate(['/dashboard']);
     }catch(error){
       let erro = error as any;

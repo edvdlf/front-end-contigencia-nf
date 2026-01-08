@@ -1,1 +1,67 @@
-<p>config-regras-form works!</p>
+<p-dialog header="Cadastro de Regras" [modal]="true" [(visible)]="dialog" (onHide)="hideDialog.emit()"
+    styleClass="p-fluid">
+    <ng-template pTemplate="header">
+        <h2 *ngIf="regra.id">Editar Regra</h2>
+        <h2 *ngIf="!regra.id">Novo Regra</h2>
+    </ng-template>
+
+    <ng-template pTemplate="content">
+        <div class="col-10 col-offset-1 md:col-12 md:col-offset-0">
+            <div class="grid justify-content-center">
+                <div class="p-field col-12 sm:col-3 md:col-3 p-fluid">
+                    <label for="ordem">Ordem</label>
+                    <input id="ordem" type="number" pInputText [(ngModel)]="regra.ordem"
+                        class="text-base text-color surface-overlay p-2 border-round appearance-none outline-none w-full">
+                    <small class="p-error" *ngIf="submitted && !regra.ordem">Ordem é obrigatória.</small>
+                </div>
+                <div class="p-field col-12 sm:col-9 md:col-9 p-fluid">
+                    <label for="descricao">Descrição</label>
+                    <input id="descricao" type="text" pInputText [(ngModel)]="regra.descricao"
+                        class="text-base text-color surface-overlay p-2 border-round appearance-none outline-none w-full">
+                    <small class="p-error" *ngIf="submitted && !regra.descricao">Descrição é obrigatória.</small>
+                </div>
+                <div class="p-field col-12 sm:col-4 md:col-4 p-fluid">
+                    <label for="classTrib">Classificação Tributaria</label>
+                    <input id="classTrib" type="text" pInputText [(ngModel)]="regra.classTrib"
+                        class="text-base text-color surface-overlay p-2 border-round appearance-none outline-none w-full">
+                    <small class="p-error" *ngIf="submitted && !regra.classTrib">Classificação é obrigatória.</small>
+                </div>
+                <div class="p-field col-12 sm:col-4 md:col-4 p-fluid">
+                    <label for="cst">CST</label>
+                    <input id="cst" type="text" pInputText [(ngModel)]="regra.cst"
+                        class="text-base text-color surface-overlay p-2 border-round appearance-none outline-none w-full">
+                    <small class="p-error" *ngIf="submitted && !regra.cst">CST é obrigatória.</small>
+                </div>
+                <div class="p-field col-12 sm:col-4 md:col-4 p-fluid">
+                    <label for="status">Status</label>
+                    <p-select id="status" 
+                        [options]="status" 
+                        filterBy="label" 
+                        optionLabel="descricao" 
+                        optionValue="nome" 
+                        placeholder="Selecione o status"
+                        appendTo="body"
+                        class="w-full" data-cy="select-perfil">
+                    </p-select>
+                    <small class="p-error" *ngIf="submitted && !regra.status">Status é obrigatório.</small>
+                </div>
+                <!--div class="p-field col-12 sm:col-4 md:col-4 p-fluid">
+                        <label for="status">Status</label>
+                        <p-dropdown id="status" options="status" [(ngModel)]="regra.status" 
+                            optionLabel="descricao" optionValue="nome" appendTo="body"
+                            placeholder="Selecione o status" />
+                        <small class="p-error" *ngIf="submitted && !regra.status">Status é obrigatório.</small>
+                    </div-->
+                <div class="p-field col-12 sm:col-6 md:col-6 p-fluid">
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button label="{{ regra.id ? 'Atualizar' : 'Salvar' }}" icon="pi pi-check" styleClass="p-button-sm"
+            (click)="salvar.emit()" data-cy="regras-btn-nova"></p-button>
+        <p-button pRipple label="Cancelar" icon="pi pi-times" styleClass="p-button-sm" severity="secondary"
+            (click)="hideDialog.emit()">
+        </p-button>
+    </ng-template>
+</p-dialog>

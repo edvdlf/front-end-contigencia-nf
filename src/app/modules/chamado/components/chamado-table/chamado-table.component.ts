@@ -19,7 +19,7 @@ import { TableModule } from "primeng/table";
 })
 export class ChamadoTableComponent {
 
-   getStatusText(enabled: boolean): string {
+  getStatusText(enabled: boolean): string {
     return enabled ? 'Sim' : 'Não';
   }
 

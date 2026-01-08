@@ -35,8 +35,8 @@ const USUARIO_NORMAL_MENU: MenuItem[] = [
 
   {
     label: 'Regras',
-    icon: 'pi pi-users',
-    route: '/regras',
+    icon: 'pi pi-cog',
+    route: '/config-regras',
     testId: 'menu-regras',
   },
 
@@ -101,8 +101,9 @@ const USUARIO_ADMIN_MENU: MenuItem[] = [
 
 @Injectable({ providedIn: 'root' })
 export class MenuService {
-  //private readonly auth = inject(AuthService);
+   private readonly loginService = inject(LoginService);
 
+ 
   // guarda o menu “base” escolhido pelo perfil (antes de filtrar permissões)
   private readonly _baseItems = signal<MenuItem[]>([]);
 
@@ -111,12 +112,13 @@ export class MenuService {
 
   /** leitura reativa do menu */
   readonly items = computed(() => this._items());
-  private readonly login = inject(LoginService);
-
+ 
 
   constructor() {
     effect(() => {
-      const roles = this.login.obterPermissoes(); // <- vem do JWT
+      const roles = this.loginService.obterPermissoes(); // <- vem do JWT
+      console.log('[MenuService] roles:', roles);
+
       const perfil: PerfilUsuario = roles.includes('ROLE_ADMINISTRATOR') || roles.includes('ROLE_SUPERUSER')
         ? 'ADMIN'
         : 'NORMAL';

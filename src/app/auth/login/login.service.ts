@@ -5,6 +5,8 @@ import { map, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 import { ILogin, IResetSenha } from '../models/login.model';
+import { LocalStorageService, UsuarioLocalStorage } from '../../core/services/local-storage.service';
+import { log } from 'console';
 
 
 const AUTH_ENDPOINT = `${environment.auth}`;
@@ -14,6 +16,9 @@ const AUTH_ENDPOINT = `${environment.auth}`;
 })
 export class LoginService {
 
+  private readonly USUARIO_KEY = 'usuarioLogin';
+
+
   isBrowser: Boolean | undefined;
 
   private readonly ACCESS_TOKEN_KEY = '@plataformaContigencia:access_token';
@@ -21,16 +26,16 @@ export class LoginService {
   public readonly ACCESS_TOKEN_KEY_ACELERADOR_TCO = '@PortalProjo:access_token';
   private readonly REFRESH_TOKEN_KEY = '@plataformaContigencia:refresh_token';
   private jwtHelper = new JwtHelperService();
-
-constructor(private _http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {
+  
+constructor(
+  private _http: HttpClient, 
+  private localStorageService: LocalStorageService,
+  @Inject(PLATFORM_ID) 
+  private platformId: Object) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
-  //isAuthenticated(): boolean {
-   // return true;
-   // const token = this.getToken();
-   // return !!token && !this.jwtHelper.isTokenExpired(token);
- // }
+  
 
   isAuthenticated(): boolean {
   const token = this.getToken();
@@ -61,6 +66,15 @@ constructor(private _http: HttpClient, @Inject(PLATFORM_ID) private platformId: 
 
           window.sessionStorage.setItem("usuarioLogin", login.usuario);
           this.initializeSession(JSON.parse(token).token);
+
+          const obj: UsuarioLocalStorage = {
+            id: '',
+            usuario: this.obterUsuarioNome() ?? '' ,
+            role: '',
+          };
+
+          this.localStorageService.armazenarUsuario(obj);
+          
         }),
         map(response => response as unknown as string)
       );
@@ -86,6 +100,7 @@ constructor(private _http: HttpClient, @Inject(PLATFORM_ID) private platformId: 
     const token = this.getToken();
     if (token) {
       const decodedToken: any = this.jwtHelper.decodeToken(token);
+      console.log(decodedToken)
       return decodedToken.usuarioNome || null;
     }
     return null;
@@ -139,6 +154,7 @@ constructor(private _http: HttpClient, @Inject(PLATFORM_ID) private platformId: 
     window.sessionStorage.removeItem(this.ACCESS_TOKEN_KEY);
   }
 
+  
 
 }
 

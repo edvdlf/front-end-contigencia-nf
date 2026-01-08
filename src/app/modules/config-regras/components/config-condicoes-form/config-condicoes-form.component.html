@@ -1,1 +1,192 @@
-<p>config-condicoes-form works!</p>
+<p-dialog header="Definição das Condições" [modal]="true" [(visible)]="dialogCondicoes"
+    (onHide)="hideDialogCondicoes.emit()" styleClass="p-fluid" [style]="{width: '98vw', height: '98vh'}">
+    <ng-template pTemplate="header">
+        <h2>Definição de Condições</h2>
+    </ng-template>
+
+    <ng-template pTemplate="content">
+        <!--div class="col-10 col-offset-1 md:col-12 md:col-offset-0">
+            <div class="grid justify-content-center">
+                <div class="p-field col-12 sm:col-4 md:col-4 p-fluid">
+                    <label for="caminho">Coluna</label>
+                    <input id="caminho" type="text" disabled pInputText [(ngModel)]="selectedColuna.caminho"
+                        class="text-base text-color surface-overlay p-2 border-round appearance-none outline-none w-full">
+                </div>
+                <div class="p-field col-12 sm:col-3 md:col-3 p-fluid">
+                    <label for="status">Condição</label>
+                   
+                    <p-select id="status" 
+                        [options]="condicoes" 
+                        filterBy="label" 
+                        optionLabel="descricao" 
+                        optionValue="nome" 
+                        placeholder="Selecione a condição"
+                        appendTo="body"
+                        class="w-full" >
+                    </p-select>
+                </div>
+                <div class="p-field col-12 sm:col-3 md:col-3 p-fluid">
+                    <label for="valor">Valor</label>
+                    <input id="valor" type="text" pInputText [(ngModel)]="valorInformado"
+                        class="text-base text-color surface-overlay p-2 border-round appearance-none outline-none w-full">
+                    <small class="p-error" *ngIf="!valorInformado">Valor é obrigatório.</small>
+                </div>
+                <div class="p-field col-12 sm:col-2 md:col-2 p-fluid">
+                    
+                    <p-button pRipple label="Adicionar" 
+                    icon="pi pi-plus" styleClass="p-button-sm" 
+                        (click)="onAdicionarClick()">
+                    </p-button>
+                </div>
+            </div>
+        </div-->
+
+<div class="card">
+  <p-toolbar >
+    <ng-template pTemplate="start">
+      <!-- Container que vira "grid" dentro da toolbar -->
+      <div class="flex flex-column md:flex-row gap-3 w-full align-items-end">
+
+        <!-- Coluna -->
+        <div class="w-full md:w-4">
+          <label for="caminho" class="block mb-1">Coluna</label>
+          <input
+            id="caminho"
+            type="text"
+            disabled
+            pInputText
+            [(ngModel)]="selectedColuna.caminho"
+            class="w-full condicoes-control"
+          />
+          <small class="condicoes-help">&nbsp;</small>
+        </div>
+
+        <!-- Condição -->
+        <div class="w-full md:w-3">
+          <label for="status" class="block mb-1">Condição</label>
+
+          <p-select
+            id="status"
+            [options]="condicoes"
+            optionLabel="descricao"
+            optionValue="nome"
+            placeholder="Selecione a condição"
+            appendTo="body"
+            styleClass="w-full condicoes-control"
+          ></p-select>
+
+          <small class="condicoes-help">&nbsp;</small>
+        </div>
+
+        <!-- Valor -->
+        <div class="w-full md:w-3">
+          <label for="valor" class="block mb-1">Valor</label>
+          <input
+            id="valor"
+            type="text"
+            pInputText
+            [(ngModel)]="valorInformado"
+            class="w-full condicoes-control"
+          />
+          <small class="p-error condicoes-help" *ngIf="!valorInformado">Valor é obrigatório.</small>
+          <small class="condicoes-help" *ngIf="valorInformado">&nbsp;</small>
+        </div>
+
+        
+
+      </div>
+    </ng-template>
+    <ng-template #end>
+        <div class="flex items-center gap-2">
+            <!-- Botão -->
+        
+          <p-button
+            pRipple
+            label="Adicionar"
+            icon="pi pi-plus"
+            styleClass="p-button-sm"
+            (click)="onAdicionarClick()"
+          ></p-button>
+          
+        
+        </div>
+    </ng-template>
+  </p-toolbar>
+</div>
+
+
+
+ 
+
+  
+
+
+
+        <p-table [value]="colunasXml" dataKey="caminho" [rows]="5" [rowsPerPageOptions]="[5, 10, 50]" [paginator]="true"
+            selectMode="single" [(selection)]="selectedColuna"
+            currentPageReportTemplate="{first} até {last} (Total de Registros: {totalRecords})"
+            styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm border-round-3xl">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th></th>
+                    <th style="text-align: left" pSortableColumn="caminho">
+                        <div class="flex items-center justify-between">
+                            <div class="flex justify-content-between align-items-center">
+                                Colunas Disponíveis
+                                <p-columnFilter type="text" field="caminho" display="menu" matchMode="contains" />
+                            </div>
+                        </div>
+                    </th>
+                    <th style="text-align: left" pSortableColumn="descricao">
+                        <div class="flex items-center justify-between">
+                            <div class="flex justify-content-between align-items-center">
+                                Descrição
+                                <p-columnFilter type="text" field="descricao" display="menu" />
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-coluna>
+                <tr>
+                    <td><p-tableRadioButton [value]="coluna" /></td>
+                    <td style="text-align: left">{{ coluna.caminho }} </td>
+                    <td style="text-align: left">{{ coluna.descricao }} </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+        
+            <p-table [value]="regraCondicoes" dataKey="caminho" [rows]="5" [rowsPerPageOptions]="[5, 10, 50]"
+                [paginator]="true" selectMode="single" [(selection)]="selectedColuna"
+                currentPageReportTemplate="{first} até {last} (Total de Registros: {totalRecords})"
+                styleClass="p-datatable-gridlines p-datatable-striped p-datatable-sm border-round-3xl">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="text-align: left" pSortableColumn="regra.id">Regra</th>
+                        <th style="text-align: left" pSortableColumn="id">Id</th>
+                        <th style="text-align: left" pSortableColumn="caminhoXml">Caminho Xml</th>
+                        <th style="text-align: left" pSortableColumn="condicao">Condição</th>
+                        <th style="text-align: left" pSortableColumn="valorInformado">Valor Informado</th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-condicao>
+                    <tr>
+                        <td style="text-align: left">{{ condicao.regra.id }} </td>
+                        <td style="text-align: left">{{ condicao.id }} </td>
+                        <td style="text-align: left">{{ condicao.caminhoXml }} </td>
+                        <td style="text-align: left">{{ condicao.condicao }} </td>
+                        <td style="text-align: left">{{ condicao.valorInformado }} </td>
+                        <td style="text-align: center">
+                            <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-danger p-button-text"
+                                pTooltip="Apagar" (click)="remover.emit(condicao)">
+                            </p-button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        
+    </ng-template>
+
+</p-dialog>

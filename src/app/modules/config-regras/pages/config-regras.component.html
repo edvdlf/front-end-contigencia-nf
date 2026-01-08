@@ -1,1 +1,19 @@
-<p>config-regras works!</p>
+<div class="grid" data-cy="page-config-regras">
+  <div class="col-12">
+    <app-config-regras-header />
+  </div>
+  <div class="col-12">
+    <app-config-regras-table [regras]="regras" [regra]="regra" [dialog]="dialog" (editar)="editar($event)" (add)="add()"
+      (excluir)="excluir($event)" (condicoes)="condicoes($event)" />
+    />
+  </div>
+  <app-config-regras-form [regra]="regra" [dialog]="dialog" [submitted]="submitted" (salvar)="salvar()"
+    (hideDialog)="hideDialog()">
+  </app-config-regras-form>
+  <!-- ✅ FORM (DIALOG) - CONDIÇÕES -->
+  <app-config-condicoes-form [dialogCondicoes]="dialogCondicoes" [colunasXml]="colunasXml"
+    [regraCondicoes]="regraCondicoes" (hideDialogCondicoes)="hideDialogCondicoes()"
+    (adicionar)="adicionarCondicao($event)" (remover)="removerCondicao($event)">
+  </app-config-condicoes-form>
+
+</div>
